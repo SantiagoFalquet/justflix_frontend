@@ -5,7 +5,7 @@ class Video {
   final double? duration;
   final String? thumbnail;
 
-  Video({
+  const Video({
     required this.id,
     required this.topic,
     this.description,
