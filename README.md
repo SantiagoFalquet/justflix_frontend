@@ -14,16 +14,17 @@ JustFlix es una plataforma de streaming de videos.
 
 ### Frontend
 
-- Flutter
-- Dart
+- **Flutter**
+- **Dart**
 
 ## Repositorio relacionados
 
-| Módulo   | Repositorio |
-| -------- | ----------- |
-| Backend | [url](https://github.com/RolyAlc/JustFlix-Backend.git)  |
+| Módulo  | Repositorio                                                    |
+| ------- | -------------------------------------------------------------- |
+| Base    | [url](https://github.com/adriian04/just-eat-adrian-roly-santi) |
+| Backend | [url](https://github.com/RolyAlc/JustFlix-Backend.git)         |
 
---
+---
 
 ## Objetivo del proyecto
 
@@ -34,7 +35,9 @@ JustFlix es una plataforma de streaming de videos.
 
 ## Requisitos
 
-- Flutter
-- Android Studio
+- **Flutter**
+- **Android Studio**
+
+---
 
 Todos los derechos reservados © JustFlix 2025
