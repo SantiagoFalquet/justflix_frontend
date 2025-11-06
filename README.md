@@ -24,7 +24,7 @@ JustFlix es una plataforma de streaming de videos.
 | Base    | [url](https://github.com/adriian04/just-eat-adrian-roly-santi) |
 | Backend | [url](https://github.com/RolyAlc/JustFlix-Backend.git)         |
 
---
+---
 
 ## Objetivo del proyecto
 
