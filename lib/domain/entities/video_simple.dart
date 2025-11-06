@@ -1,8 +1,8 @@
 class VideoSimple {
-  String id;
-  String? thumbnail;
+  final String id;
+  final String? thumbnail;
 
-  VideoSimple({
+  const VideoSimple({
     required this.id,
     this.thumbnail
     });
