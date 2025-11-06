@@ -21,7 +21,7 @@ JustFlix es una plataforma de streaming de videos.
 
 | Módulo   | Repositorio |
 | -------- | ----------- |
-| Backend | [url]([url](https://github.com/RolyAlc/JustFlix-Backend.git))  |
+| Backend | [url](https://github.com/RolyAlc/JustFlix-Backend.git)  |
 
 --
 
