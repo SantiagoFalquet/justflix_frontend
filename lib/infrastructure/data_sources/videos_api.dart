@@ -36,7 +36,7 @@ class VideosApi {
 
   /// Obtener información de un video específico en formato JSON.
   Future<Map<String, dynamic>> getVideoById(String videoId) async {
-    final url = Uri.parse('$baseURL/$videoId');
+    final url = Uri.parse('$baseURL/videos/$videoId');
     final response = await http.get(url);
     
     if (response.statusCode == HttpStatus.ok) {
