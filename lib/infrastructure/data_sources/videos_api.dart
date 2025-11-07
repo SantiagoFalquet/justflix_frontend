@@ -42,7 +42,7 @@ class VideosApi {
     if (response.statusCode == HttpStatus.ok) {
       final body = utf8.decode(response.bodyBytes);
       final Map<String, dynamic> jsonMap = jsonDecode(body);
-      return jsonDecode(body) as Map<String, dynamic>;
+      return jsonMap;
     } else {
       throw Exception('Error al obtener vídeos $videoId: ${response.statusCode}');
     }
