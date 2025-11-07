@@ -9,7 +9,7 @@
 .settings/
 
 # Archivos generados por Dart y Flutter
-.dart_tool/
+.dart_tool/**
 .packages
 .flutter-plugins
 .flutter-plugins-dependencies
