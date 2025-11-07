@@ -20,12 +20,12 @@ class VideosProvider extends ChangeNotifier {
   String? _error;
   String? get error => _error;
 
-  /// Estao par el video de detalle.
+  /// Estado para el video de detalle.
   bool _isLoadingDetail = false;
   bool get isLoadingDetail => _isLoadingDetail;
 
   Video? _selectedVideo;
-  Video? get selctedVideo => _selectedVideo;
+  Video? get selectedVideo => _selectedVideo;
 
   String? _detailError;
   String? get detailError => _detailError;
@@ -56,7 +56,7 @@ class VideosProvider extends ChangeNotifier {
       _selectedVideo = await videosRepository.getVideoById(videoId);
     } catch (e) {
       _detailError = "Error al cargar el detalle del video: ${e.toString()}";
-      _selectedVideo = null; // Limpia el vide anterior si hay un error.
+      _selectedVideo = null; // Limpia el video anterior si hay un error.
     } finally {
       _isLoadingDetail = false;
       notifyListeners();
