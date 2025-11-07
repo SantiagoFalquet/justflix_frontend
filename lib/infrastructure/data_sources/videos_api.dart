@@ -18,7 +18,7 @@ class VideosApi {
     final Uri url;
 
     if (searchQuery.isEmpty) {
-      url = Uri.parse(baseURL);
+      url = Uri.parse('$baseURL/videos');
     } else {
       url = Uri.parse('$baseURL/topic/$searchQuery');
     }
