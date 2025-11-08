@@ -19,12 +19,15 @@ class VideoMapper {
       );
     }
 
+    final thumbnailFromJson = json["thumbnail"] as String?;
+    final thumbnail = thumbnailFromJson?.replaceAll('localhost', '10.0.2.2');
+
     return Video(
       id: id,
       topic: topic,
       description: json["description"] as String?,
       duration: (json["duration"] as num?)?.toDouble(),
-      thumbnail: json["thumbnail"] as String?,
+      thumbnail: thumbnail,
     );
   }
 }

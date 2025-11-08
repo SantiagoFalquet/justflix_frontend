@@ -11,9 +11,12 @@ class VideoSimpleMapper {
       );
     }
 
+    final thumbnailFromJson = json["thumbnail"] as String?;
+    final thumbnail = thumbnailFromJson?.replaceAll('localhost', '10.0.2.2');
+
     return VideoSimple(
       id: id,
-      thumbnail: json["thumbnail"] as String?,
+      thumbnail: thumbnail,
       );
   }
 }
