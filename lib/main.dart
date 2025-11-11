@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: Reemplazar con la URL real de la API
-    const String apiBaseUrl = 'http://10.0.2.2:3001/api'; 
+    const String apiBaseUrl = 'http://10.0.2.2:3002/api'; 
 
     return MultiProvider(
       providers: [
