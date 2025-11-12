@@ -1,6 +1,7 @@
 import 'package:justflix_frontend/domain/entities/video_simple.dart';
 
 class VideoSimpleMapper {
+  static const String _backendBaseUrl = 'http://localhost:3002';
   // Mètode estàtic que rep un JSON i retorna una istància de VideoSimple
   static VideoSimple fromJson(Map<String, dynamic> json) {
     /// Validaciones
@@ -11,12 +12,13 @@ class VideoSimpleMapper {
       );
     }
 
-    final thumbnailFromJson = json["thumbnail"] as String?;
-    final thumbnail = thumbnailFromJson?.replaceAll('localhost', '10.0.2.2');
+    /// Gestiona url completa o ruta relativa enviada desde el backend.
+    var thumbnailPath = json["thumbnail"] as String?;
+    if (thumbnailPath != null && !thumbnailPath.startsWith('http')) {
+      thumbnailPath = '$_backendBaseUrl/$thumbnailPath';
+    }
+    final thumbnail = thumbnailPath?.replaceAll('localhost', '10.0.2.2');
 
-    return VideoSimple(
-      id: id,
-      thumbnail: thumbnail,
-      );
+    return VideoSimple(id: id, thumbnail: thumbnail);
   }
 }
