@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:justflix_frontend/presentation/providers/videos_providers.dart';
 import 'package:justflix_frontend/presentation/widgets/video_list_item.dart';
 import 'package:justflix_frontend/presentation/widgets/video_detail.dart'; // Importamos el nuevo widget
+import 'package:justflix_frontend/assets.dart';
 
 /// Pantalla principal que muestra una lista de videos y su detalle de forma responsiva.
 ///
@@ -39,8 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Justflix - Videos'),
-        actions: [
+        // title: const Text('Justflix - Videos'),
+        /// Mostra el logo de la aplicación en el AppBar.
+        /// Logo está en la ruta assets y declarada en pubspec.yml
+        title: Image.asset(AppAssets.images.logo, height: 40),
+        /* actions: [
           // Botón para limpiar la selección del video de detalle
           if (videosProvider.selectedVideo != null)
             IconButton(
@@ -59,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             tooltip: 'Recargar videos',
           ),
-        ],
+        ], */
       ),
       body: _buildBody(videosProvider),
       // El FloatingActionButton original se ha movido a la AppBar como IconButton
