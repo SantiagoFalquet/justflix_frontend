@@ -54,7 +54,7 @@ class VideoDetail extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              /* Text(
                 video.topic,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
@@ -63,14 +63,15 @@ class VideoDetail extends StatelessWidget {
                 'Duración: ${video.duration?.toStringAsFixed(2) ?? 'N/A'} mins',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              const Divider(height: 24),
+              const Divider(height: 24), */
               if (video.thumbnail != null && video.thumbnail!.isNotEmpty) ...[
                 Image.network(video.thumbnail!),
                 const SizedBox(height: 16),
               ],
               Text(
-                video.description ?? 'No hay descripción disponible.',
-                style: Theme.of(context).textTheme.bodyMedium,
+                video.topic,
+                style: Theme.of(context).textTheme.headlineSmall,
+                textAlign: TextAlign.center,
               ),
             ],
           ),
