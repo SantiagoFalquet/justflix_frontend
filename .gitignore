@@ -15,11 +15,6 @@
 .flutter-plugins-dependencies
 build/
 web/
-
-# Plataforma
-android/
-ios/
-macos/
 # El archivo pubspec.lock DEBE ser versionado, así que nos aseguramos de que no esté aquí.
 # !pubspec.lock
 
