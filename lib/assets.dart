@@ -1,3 +1,4 @@
+/// Gestiona las rutas de los recursos estáticos (assets) de la aplicación
 class AppAssets {
   /// Imágenes
   static const _baseImages = 'assets/images/';
