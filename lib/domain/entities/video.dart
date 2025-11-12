@@ -4,6 +4,7 @@ class Video {
   final String? description;
   final double? duration;
   final String? thumbnail;
+  final String? videoUrl;
 
   const Video({
     required this.id,
@@ -11,10 +12,11 @@ class Video {
     this.description,
     this.duration,
     this.thumbnail,
+    this.videoUrl,
   });
 
   @override
   String toString() {
-    return 'Video(id: $id, topic: $topic, duration: $duration)';
+    return 'Video(id: $id, topic: $topic, duration: $duration, description: $description)';
   }
 }
