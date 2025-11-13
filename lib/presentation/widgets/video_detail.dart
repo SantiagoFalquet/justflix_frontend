@@ -74,6 +74,7 @@ class _VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<_VideoPlayerWidget> {
   late VideoPlayerController _controller;
+  bool _showControls = true; // Nuevo: para mostrar/ocultar controles
 
   @override
   void initState() {
@@ -81,14 +82,13 @@ class _VideoPlayerWidgetState extends State<_VideoPlayerWidget> {
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
       ..initialize().then((_) {
         setState(() {});
-        // _controller.play(); // auto-play
       });
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    super.dispose();
+    super.dispose(); // ¡Asegúrate de que esto sea super.dispose() con paréntesis!
   }
 
   @override
@@ -103,29 +103,114 @@ class _VideoPlayerWidgetState extends State<_VideoPlayerWidget> {
     }
   }
 
+  // Nuevo: Función auxiliar para formatear la duración
+  String _formatDuration(Duration d) {
+    final minutes = d.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds = d.inSeconds.remainder(60).toString().padLeft(2, '0');
+    return "$minutes:$seconds";
+  }
+
   @override
   Widget build(BuildContext context) {
     return _controller.value.isInitialized
-        ? Column(
-            children: [
-              AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
+        ? GestureDetector(
+            onTap: () {
+              setState(() {
+                _showControls = !_showControls;
+              });
+            },
+            // El AspectRatio debe envolver al Stack para darle un tamaño definido.
+            child: AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  // 1. El vídeo como fondo del Stack
+                  VideoPlayer(_controller),
+
+                  // 2. Un gradiente para que los controles se lean mejor
+                  if (_showControls)
+                    Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [Colors.black87, Colors.transparent],
+                        ),
+                      ),
+                    ),
+
+                  // 3. El botón de Play/Pausa en el centro
+                  if (_showControls)
+                    Center(
+                      child: IconButton(
+                        icon: Icon(
+                          _controller.value.isPlaying
+                              ? Icons.pause_circle_outline
+                              : Icons.play_circle_outline,
+                          color: Colors.white,
+                          size: 60,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _controller.value.isPlaying
+                                ? _controller.pause()
+                                : _controller.play();
+                          });
+                        },
+                      ),
+                    ),
+
+                  // 4. La barra de controles en la parte inferior
+                  if (_showControls)
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: ValueListenableBuilder<VideoPlayerValue>(
+                        valueListenable: _controller,
+                        builder: (context, value, child) {
+                          final pos = value.position;
+                          final dur = value.duration;
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  _formatDuration(pos),
+                                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                                ),
+                                Expanded(
+                                  child: Slider(
+                                    activeColor: Colors.red,
+                                    inactiveColor: Colors.white54,
+                                    min: 0,
+                                    max: dur.inSeconds.toDouble(),
+                                    value: pos.inSeconds.toDouble().clamp(
+                                      0,
+                                      dur.inSeconds.toDouble(),
+                                    ),
+                                    onChanged: (newVal) {
+                                      _controller.seekTo(Duration(seconds: newVal.toInt()));
+                                    },
+                                  ),
+                                ),
+                                Text(
+                                  _formatDuration(dur),
+                                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                ],
               ),
-              IconButton(
-                icon: Icon(
-                  _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _controller.value.isPlaying
-                        ? _controller.pause()
-                        : _controller.play();
-                  });
-                },
-              ),
-            ],
+            ),
           )
-        : const Center(child: CircularProgressIndicator());
+        
+      : const Center(child: CircularProgressIndicator());
   }
 }
