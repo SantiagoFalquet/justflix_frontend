@@ -1,5 +1,8 @@
 # Carpeta personal
-00_r/**
+00_r/*
+
+# Entorno
+.env
 
 # Archivos de metadatos de varios editores
 .idea/
