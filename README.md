@@ -38,6 +38,18 @@ JustFlix es una plataforma de streaming de videos.
 - **Flutter**
 - **Android Studio**
 
+## Fases
+
+### Fase 2
+
+- [x] Caldrà convertir els vídeos que volguem afegir a l'aplicació, cadascun en una carpeta, on afegirem els fitxers .ts i .m3u8 generats.
+- [x] Caldrà configurar el nostre servidor Express amb el middleware `static`, per a que servisca la carpeta amb els vídeos.
+- [x] Caldrà modificar la llista de vídeos amb la informació dels vídeos que hem creat, afegint com a font del vídeo la ruta al fitxer m3u8.
+- [x] Afegir la reproducció de vídeo al client:
+  - [x] Afegir un widget per a la reproducció de vídeo.
+  - [x] Generar els controls necessaris per a la reproducció i pausa.
+  - [x] Modificar l'aplicació per donar-li permís per accedir a Internet al `AndroidManifest.xml`, després de l'etiqueta `application`: `<uses-permission android:name="android.permission.INTERNET"/>`
+
 ---
 
 Todos los derechos reservados © JustFlix 2025

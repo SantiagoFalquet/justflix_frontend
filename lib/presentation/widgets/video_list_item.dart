@@ -28,6 +28,7 @@ class VideoListItem extends StatelessWidget {
         child: ListTile(
           leading: _buildThumbnail(),
           title: Text('Video ID: ${video.id}'),
+          subtitle: Text('Duración: ${_formatoDuration(video.duration)}'),
         ),
       ),
     );
@@ -58,5 +59,15 @@ class VideoListItem extends StatelessWidget {
       // Si no hay thumbnail, muestra un icono de película
       return const Icon(Icons.movie, size: 40);
     }
+  }
+  
+  String _formatoDuration(double? seconds) {
+    if (seconds == null) {
+      return 'N/A';
+    }
+      final duration = Duration(seconds: seconds.toInt());
+      final minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+      final secs = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+      return '$minutes:$secs';
   }
 }

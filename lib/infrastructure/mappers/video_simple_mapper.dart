@@ -2,7 +2,10 @@ import 'package:justflix_frontend/domain/entities/video_simple.dart';
 
 class VideoSimpleMapper {
   static const String _backendBaseUrl = 'http://localhost:3002';
-  // Mètode estàtic que rep un JSON i retorna una istància de VideoSimple
+  /// Convierte un mapa JSON a una entidad [VideoSimple].
+  /// 
+  /// [param] json. El mapa de donde se extraerán los datos.
+  /// [returns] Instancia de [VideoSimple]
   static VideoSimple fromJson(Map<String, dynamic> json) {
     /// Validaciones
     final id = json["id"] as String?;
@@ -19,6 +22,12 @@ class VideoSimpleMapper {
     }
     final thumbnail = thumbnailPath?.replaceAll('localhost', '10.0.2.2');
 
-    return VideoSimple(id: id, thumbnail: thumbnail);
+    // final duration = json["duration"] as double?;
+
+    return VideoSimple(
+      id: id,
+      thumbnail: thumbnail,
+      duration: (json["duration"] as num?)?.toDouble(),
+      );
   }
 }
