@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:justflix_frontend/infrastructure/data_sources/videos_api.dart';
 import 'package:justflix_frontend/domain/repositories/videos_repositori.dart';
@@ -6,7 +7,8 @@ import 'package:justflix_frontend/infrastructure/repository/videos_repository_im
 import 'package:justflix_frontend/presentation/providers/videos_providers.dart';
 import 'package:justflix_frontend/presentation/screens/home_screen.dart'; // Importamos la HomeScreen
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -15,8 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Reemplazar con la URL real de la API
-    const String apiBaseUrl = 'http://10.0.2.2:3002/api'; 
+    final String apiBaseUrl = dotenv.env['API_BASE_URL'] ?? 'http://localhost:3000/api'; 
 
     return MultiProvider(
       providers: [
