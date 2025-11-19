@@ -5,7 +5,7 @@ import 'package:justflix_frontend/infrastructure/data_sources/videos_api.dart';
 import 'package:justflix_frontend/domain/repositories/videos_repositori.dart';
 import 'package:justflix_frontend/infrastructure/repository/videos_repository_impl.dart';
 import 'package:justflix_frontend/presentation/providers/videos_providers.dart';
-import 'package:justflix_frontend/presentation/screens/home_screen.dart'; // Importamos la HomeScreen
+import 'package:justflix_frontend/presentation/screens/home/home_screen.dart'; // Importamos la HomeScreen
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");

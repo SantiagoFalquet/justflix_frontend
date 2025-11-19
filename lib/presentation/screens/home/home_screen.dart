@@ -9,6 +9,7 @@ import 'package:justflix_frontend/assets.dart';
 ///
 /// Gestiona la carga, visualización y manejo de errores/estados vacíos.
 /// de la lista de videos a través de [VideosProvider].
+/// 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
