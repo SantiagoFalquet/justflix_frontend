@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:justflix_frontend/presentation/providers/videos_providers.dart';
-import 'package:justflix_frontend/presentation/widgets/video_list_item.dart';
-import 'package:justflix_frontend/presentation/widgets/video_detail.dart'; // Importamos el nuevo widget
+import 'package:justflix_frontend/presentation/widgets/video/video_list_item.dart';
+import 'package:justflix_frontend/presentation/widgets/video/video_detail.dart';
 import 'package:justflix_frontend/assets.dart';
 
 /// Pantalla principal que muestra una lista de videos y su detalle de forma responsiva.
 ///
-/// Gestiona la carga, visualización y manejo de errores/estados vacíos
+/// Gestiona la carga, visualización y manejo de errores/estados vacíos.
 /// de la lista de videos a través de [VideosProvider].
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,33 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        // title: const Text('Justflix - Videos'),
         /// Mostra el logo de la aplicación en el AppBar.
         /// Logo está en la ruta assets y declarada en pubspec.yml
         title: Image.asset(AppAssets.images.logo, height: 40),
-        /* actions: [
-          // Botón para limpiar la selección del video de detalle
-          if (videosProvider.selectedVideo != null)
-            IconButton(
-              icon: const Icon(Icons.clear),
-              onPressed: () {
-                videosProvider.clearSelectedVideo();
-              },
-              tooltip: 'Limpiar selección',
-            ),
-          // Botón para recargar la lista de videos
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              videosProvider.loadVideos();
-              videosProvider.clearSelectedVideo(); // Limpiar detalle al recargar lista
-            },
-            tooltip: 'Recargar videos',
-          ),
-        ], */
       ),
       body: _buildBody(videosProvider),
-      // El FloatingActionButton original se ha movido a la AppBar como IconButton
     );
   }
 
