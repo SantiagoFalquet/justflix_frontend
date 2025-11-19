@@ -3,15 +3,11 @@ import 'package:justflix_frontend/presentation/widgets/video_player/video_view.d
 import 'package:video_player/video_player.dart';
 
 /// Contenedor responsable de gestionar el ciclo de vidas del [VideoPlayerContainer].
-/// 
+///
 class VideoPlayerContainer extends StatefulWidget {
   final String videoUrl;
 
-  const VideoPlayerContainer({
-    super.key,
-    required this.videoUrl,
-    
-  });
+  const VideoPlayerContainer({super.key, required this.videoUrl});
 
   @override
   State<VideoPlayerContainer> createState() => _VideoPlayerContainerState();
@@ -21,6 +17,12 @@ class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
   late VideoPlayerController _controller;
   bool _showControls = true;
 
+  void _videoListener() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -28,10 +30,14 @@ class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
   }
 
   void _createController(String url) {
-    _controller = VideoPlayerController.networkUrl(Uri.parse(url))
-      ..initialize().then((_) {
+    _controller = VideoPlayerController.networkUrl(Uri.parse(url));
+
+    _controller.addListener(_videoListener);
+    _controller.initialize().then((_) {
+      if (mounted) {
         setState(() {});
-      });
+      }
+    });
   }
 
   @override
@@ -40,6 +46,7 @@ class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
 
     // Si la URL del video cambia, reiniciamos el controller.
     if (oldWidget.videoUrl != widget.videoUrl) {
+      _controller.removeListener(_videoListener);
       _controller.dispose();
       _createController(widget.videoUrl);
     }
@@ -47,6 +54,7 @@ class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
 
   @override
   void dispose() {
+    _controller.removeListener(_videoListener);
     _controller.dispose();
     super.dispose();
   }
@@ -60,7 +68,7 @@ class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_controller.value.isInitialized){
+    if (!_controller.value.isInitialized) {
       return const Center(child: CircularProgressIndicator());
     }
 
