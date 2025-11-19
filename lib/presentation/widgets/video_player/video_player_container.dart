@@ -16,7 +16,6 @@ class VideoPlayerContainer extends StatefulWidget {
 class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
   late VideoPlayerController _controller;
   bool _showControls = true;
-  bool _isSeeking = false;
   bool _wasPlayingBeforeSeek = false;
 
   void _videoListener() {
@@ -66,7 +65,6 @@ class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
       return;
     }
     setState(() {
-      _isSeeking = true;
       _wasPlayingBeforeSeek = _controller.value.isPlaying;
       if (_wasPlayingBeforeSeek) {
         _controller.pause();
@@ -82,7 +80,6 @@ class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
       _controller.play();
     }
     setState(() {
-      _isSeeking = false;
     });
   }
 
