@@ -9,6 +9,8 @@ class VideoPlayerView extends StatelessWidget {
   final VoidCallback onToggleControls;
   final VoidCallback onPlayPause;
   final ValueChanged<double> onSeek;
+  final ValueChanged<double>? onSeekStart;
+  final ValueChanged<double>? onSeekEnd;
 
   const VideoPlayerView({
     super.key,
@@ -17,6 +19,8 @@ class VideoPlayerView extends StatelessWidget {
     required this.onToggleControls,
     required this.onPlayPause,
     required this.onSeek,
+    this.onSeekStart,
+    this.onSeekEnd,
   });
 
   @override
@@ -92,6 +96,8 @@ class VideoPlayerView extends StatelessWidget {
                             dur.inSeconds.toDouble(),
                           ),
                           onChanged: onSeek,
+                          onChangeStart: onSeekStart,
+                          onChangeEnd: onSeekEnd,
                         ),
                       ),
                       Text(

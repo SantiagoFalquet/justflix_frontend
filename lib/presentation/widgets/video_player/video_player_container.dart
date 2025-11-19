@@ -16,8 +16,14 @@ class VideoPlayerContainer extends StatefulWidget {
 class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
   late VideoPlayerController _controller;
   bool _showControls = true;
+  bool _isSeeking = false;
+  bool _wasPlayingBeforeSeek = false;
 
   void _videoListener() {
+    if (_isSeeking) {
+      return;
+    }
+
     if (mounted) {
       setState(() {});
     }
@@ -59,6 +65,31 @@ class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
     super.dispose();
   }
 
+  void _handleSeekStart(double value) {
+    if (!_controller.value.isInitialized) {
+      return;
+    }
+    setState(() {
+      _isSeeking = true;
+      _wasPlayingBeforeSeek = _controller.value.isPlaying;
+      if (_wasPlayingBeforeSeek) {
+        _controller.pause();
+      }
+    });
+  }
+
+  void _handleSeekEnd(double value) {
+    if (!_controller.value.isInitialized) {
+      return;
+    }
+    if (_wasPlayingBeforeSeek) {
+      _controller.play();
+    }
+    setState(() {
+      _isSeeking = false;
+    });
+  }
+
   // alterna la visibilidad de los controles.
   void _toggleControls() {
     setState(() {
@@ -89,6 +120,8 @@ class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
         final position = Duration(seconds: value.toInt());
         _controller.seekTo(position);
       },
+      onSeekStart: _handleSeekStart,
+      onSeekEnd: _handleSeekEnd,
     );
   }
 }
