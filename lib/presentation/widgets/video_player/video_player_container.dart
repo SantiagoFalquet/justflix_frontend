@@ -20,10 +20,6 @@ class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
   bool _wasPlayingBeforeSeek = false;
 
   void _videoListener() {
-    if (_isSeeking) {
-      return;
-    }
-
     if (mounted) {
       setState(() {});
     }
