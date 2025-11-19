@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:justflix_frontend/domain/entities/video_simple.dart';
 import 'package:justflix_frontend/utils/formatters.dart';
-import 'package:justflix_frontend/presentation/widgets/video_thumbnail.dart';
+import 'package:justflix_frontend/presentation/widgets/shared/video_thumbnail.dart';
 
 /// Un widget que muestra un único elemento de video en una lista.
 ///
