@@ -3,7 +3,7 @@ import 'package:justflix_frontend/domain/entities/video_simple.dart';
 import 'package:justflix_frontend/presentation/screens/home/sections/video_list_section.dart';
 import 'package:justflix_frontend/presentation/widgets/video/video_detail.dart';
 
-/// Sección responsable de decidir el layoour responsivo del listado + detalle.
+/// Sección responsable de decidir el layout responsivo del listado + detalle.
 ///
 class ResponsiveVideoLayout extends StatelessWidget {
   final List<VideoSimple> videos;
@@ -14,8 +14,8 @@ class ResponsiveVideoLayout extends StatelessWidget {
     super.key,
     required this.videos,
     required this.onVideoSelected,
-    this.breakpoint =
-        600.0, // Definimos un breakpoint para cambiar entre layouts
+    // Definimos un breakpoint para cambiar entre layouts
+    this.breakpoint = 600.0, // pixeles lógicos
   });
 
   @override
