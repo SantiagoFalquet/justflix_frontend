@@ -18,11 +18,11 @@ class VideosRepositoryImpl implements VideosRepository {
   // L'API s'inicialitza en el constructor
   VideosRepositoryImpl(this.remote);
 
-  // Obté una llista de Comarques (pertanyents a la província)
+  // Obtiene una lista de videos del servidor
   @override
   Future<List<VideoSimple>> getVideos(String searchQuery) async {
     try {
-      // Posem l'await per esperar-nos a obtenir la resposta
+      // Await esperando a la respuesta
       final jsonVideos = await remote.getVideos(searchQuery);
       return jsonVideos
           .map((videosJSON) => VideoSimpleMapper.fromJson(videosJSON))
@@ -33,12 +33,11 @@ class VideosRepositoryImpl implements VideosRepository {
     }
   }
 
-  // Obté informació sobre una comarca concreta
+  // Obtiene información detallada del video por su id
   @override
   Future<Video?> getVideoById(String videoId) async {
     try {
       final jsonVideo = await remote.getVideoById(videoId);
-      // No cal fer un map perquè no és una llista!
       return VideoMapper.fromJson(jsonVideo);
     } catch (e) {
       print("Error al recuperar la información del video: $e");

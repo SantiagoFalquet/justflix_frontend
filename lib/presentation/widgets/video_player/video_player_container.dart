@@ -79,8 +79,7 @@ class _VideoPlayerContainerState extends State<VideoPlayerContainer> {
     if (_wasPlayingBeforeSeek) {
       _controller.play();
     }
-    setState(() {
-    });
+    setState(() {});
   }
 
   // alterna la visibilidad de los controles.

@@ -3,7 +3,6 @@ import 'package:justflix_frontend/domain/entities/video_simple.dart';
 import 'package:justflix_frontend/presentation/widgets/video/video_list_item.dart';
 
 /// Sección que muestra la lista de videos.
-/// 
 class VideoListSection extends StatelessWidget {
   final List<VideoSimple> videos;
   final void Function(String videoId) onVideoSelected;
