@@ -38,36 +38,38 @@ JustFlix es una plataforma de streaming de videos.
 - **Flutter**
 - **Android Studio**
 
+---
+
 ## Instal·lació
 
 1. Clonar el repositori
 
-```bash
-git clone https://github.com/SantiagoFalquet/justflix_frontend.git
-cd justflix_backend
-```
+    ```bash
+    git clone https://github.com/SantiagoFalquet/justflix_frontend.git
+    cd justflix_backend
+    ```
 
 2. Instal·lar les dependencies
-```bash
-flutter pub get
-```
+
+    ```bash
+    flutter pub get
+    ```
 
 3. Executar-lo
-```bash
-flutter run
-// afegit un "-d <plataforma>" per a executarlo en una plataforma concreta
-```
 
-> [!IMPORTANT]  
-> El [backend](https://github.com/RolyAlc/JustFlix-Backend) te que estar funcionant
+    ```bash
+    flutter run
+    // afegit un "-d <plataforma>" per a executarlo en una plataforma concreta
+    ```
 
+    > [**IMPORTANT**]
+    > El [backend](https://github.com/RolyAlc/JustFlix-Backend) te que estar funcionant.
 
 4. (opcional) Convertirlo a un fitxer instal·lable/executable
 
-```bash
-flutter build apk
-```
-
+    ```bash
+    flutter build apk
+    ```
 
 ## Fases
 
