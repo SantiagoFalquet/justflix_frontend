@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:justflix_frontend/infrastructure/data_sources/videos_api.dart';
 import 'package:justflix_frontend/domain/repositories/videos_repositori.dart';
 import 'package:justflix_frontend/infrastructure/repository/videos_repository_impl.dart';
 import 'package:justflix_frontend/presentation/providers/videos_providers.dart';
 import 'package:justflix_frontend/presentation/screens/home/home_screen.dart';
+import 'package:justflix_frontend/infrastructure/config/app_config.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final String apiBaseUrl =
-        dotenv.env['API_BASE_URL'] ?? 'http://localhost:3000/api';
+    final String apiBaseUrl = AppConfig.apiUrl;
     return MultiProvider(
       providers: [
         // Proveedor para la capa de datos
