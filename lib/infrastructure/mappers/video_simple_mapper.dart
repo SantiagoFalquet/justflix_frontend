@@ -1,7 +1,7 @@
 import 'package:justflix_frontend/domain/entities/video_simple.dart';
+import 'package:justflix_frontend/utils/url_formatter.dart';
 
 class VideoSimpleMapper {
-  static const String _backendBaseUrl = 'http://localhost:3002';
   /// Convierte un mapa JSON a una entidad [VideoSimple].
   /// 
   /// [param] json. El mapa de donde se extraerán los datos.
@@ -15,14 +15,7 @@ class VideoSimpleMapper {
       );
     }
 
-    /// Gestiona url completa o ruta relativa enviada desde el backend.
-    var thumbnailPath = json["thumbnail"] as String?;
-    if (thumbnailPath != null && !thumbnailPath.startsWith('http')) {
-      thumbnailPath = '$_backendBaseUrl/$thumbnailPath';
-    }
-    final thumbnail = thumbnailPath?.replaceAll('localhost', '10.0.2.2');
-
-    // final duration = json["duration"] as double?;
+    final thumbnail = UrlFormatter.formatPath(json["thumbnail"] as String?);
 
     return VideoSimple(
       id: id,
