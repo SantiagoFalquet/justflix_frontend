@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:justflix_frontend/presentation/widgets/video_player/video_player_orchestrator.dart';
 import 'package:provider/provider.dart';
 import 'package:justflix_frontend/domain/entities/video.dart';
 import 'package:justflix_frontend/presentation/providers/videos_providers.dart';
-import 'package:justflix_frontend/presentation/widgets/video_player/video_player_container.dart';
-
 
 /// Un widget que muestra el detalle de un video seleccionado.
 ///
@@ -49,7 +48,7 @@ class _VideoDetailContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (video.videoUrl != null && video.videoUrl!.isNotEmpty)
-            VideoPlayerContainer(videoUrl: video.videoUrl!)
+            VideoPlayerOrchestrator(videoUrl: video.videoUrl!)
           else if (video.thumbnail != null && video.thumbnail!.isNotEmpty)
             Image.network(video.thumbnail!),
 
