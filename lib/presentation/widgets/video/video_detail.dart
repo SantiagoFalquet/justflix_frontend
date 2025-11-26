@@ -54,7 +54,7 @@ class _VideoDetailContent extends StatelessWidget {
             Image.network(video.thumbnail!),
 
           const SizedBox(height: 16),
-          Text(video.topic, style: Theme.of(context).textTheme.headlineSmall),
+          Text(video.id, style: Theme.of(context).textTheme.headlineSmall),
           
           const SizedBox(height: 8),
           if (video.description != null) 

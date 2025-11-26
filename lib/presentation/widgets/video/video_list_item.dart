@@ -26,7 +26,7 @@ class VideoListItem extends StatelessWidget {
         onTap: onTap, // _todo el card es pulsable
         child: ListTile(
           leading: VideoThumbnail(thumbnailUrl: video.thumbnail),
-          title: Text('Video ID: ${video.id}'),
+          title: Text(video.id),
           subtitle: Text('Duración: ${formatoDuration(video.duration)}'),
         ),
       ),
