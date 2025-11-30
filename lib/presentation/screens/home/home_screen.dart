@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:justflix_frontend/infrastructure/repository/videos_repository_impl.dart';
 import 'package:justflix_frontend/assets.dart';
 import 'package:justflix_frontend/presentation/providers/videos_providers.dart';
 import 'package:justflix_frontend/presentation/widgets/shared/empty_state_widget.dart';
@@ -10,7 +10,7 @@ import 'package:justflix_frontend/presentation/screens/home/sections/responsive_
 /// Pantalla principal que muestra una lista de videos y su detalle de forma responsiva.
 ///
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required VideosRepositoryImpl repository});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

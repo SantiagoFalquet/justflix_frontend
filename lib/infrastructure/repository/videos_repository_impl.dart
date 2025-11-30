@@ -20,10 +20,10 @@ class VideosRepositoryImpl implements VideosRepository {
 
   // Obtiene una lista de videos del servidor
   @override
-  Future<List<VideoSimple>> getVideos(String searchQuery) async {
+  Future<List<VideoSimple>> getVideos(String video) async {
     try {
       // Await esperando a la respuesta
-      final jsonVideos = await remote.getVideos(searchQuery);
+      final jsonVideos = await remote.getVideos(video);
       return jsonVideos
           .map((videosJSON) => VideoSimpleMapper.fromJson(videosJSON))
           .toList();

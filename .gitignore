@@ -3,6 +3,11 @@
 
 # Entorno
 .env
+android/*
+linux/*
+macos/*
+windows/*
+ios/*
 
 # Archivos de metadatos de varios editores
 .idea/
@@ -19,7 +24,7 @@
 build/
 web/
 # El archivo pubspec.lock DEBE ser versionado, así que nos aseguramos de que no esté aquí.
-# !pubspec.lock
+!pubspec.lock
 
 # Archivos de sistema operativo
 .DS_Store

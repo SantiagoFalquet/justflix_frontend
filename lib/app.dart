@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:justflix_frontend/infrastructure/data_sources/videos_api.dart';
-import 'package:justflix_frontend/domain/repositories/videos_repositori.dart';
 import 'package:justflix_frontend/infrastructure/repository/videos_repository_impl.dart';
-import 'package:justflix_frontend/presentation/providers/videos_providers.dart';
 import 'package:justflix_frontend/presentation/screens/home/home_screen.dart';
 import 'package:justflix_frontend/infrastructure/config/app_config.dart';
 
@@ -13,6 +11,8 @@ import 'package:justflix_frontend/infrastructure/config/app_config.dart';
 /// Se configura los proveedores necesarios para obtener datos, acceder
 /// al repositorio de videos y manejar los esatdo de la aplicación.
 ///
+const seed = Color(0xFF6750A4); // Color llavor
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -21,32 +21,26 @@ class MyApp extends StatelessWidget {
     // URL base de la API de flutter + puerto (.env)
     final String apiBaseUrl = AppConfig.apiUrl;
 
-    return MultiProvider(
-      providers: [
-        // Proveedor para la capa de datos. Crea la instancia q se comunica
-        // directamente con la API remota
-        Provider<VideosApi>(create: (_) => VideosApi(apiBaseUrl)),
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDyn, ColorScheme? darkDyn) {
+        final ColorScheme light =
+            (lightDyn?.harmonized()) ??
+            ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.light);
 
-        // Proveedor para la capa de repositorio.
-        // Capa intermedia entra la API y la lógica de la aplicación
-        ProxyProvider<VideosApi, VideosRepository>(
-          update: (_, api, __) => VideosRepositoryImpl(api),
-        ),
+        final ColorScheme dark =
+            (darkDyn?.harmonized()) ??
+            ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.dark);
 
-        // Proveedor de estado que gestiona la lógica usadaen la UI.
-        ChangeNotifierProvider(
-          create: (context) =>
-              VideosProvider(videosRepository: context.read<VideosRepository>())
-                ..loadVideos(), // Cargamos los vídeos al iniciar la app
-        ),
-      ],
-
-      // Aplicación principal de Flutter
-      child: MaterialApp(
-        title: 'Justflix',
-        debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
-      ),
+        return MaterialApp(
+          title: 'Justflix',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(useMaterial3: true, colorScheme: light),
+          darkTheme: ThemeData(useMaterial3: true, colorScheme: dark),
+          home: HomeScreen(
+            repository: VideosRepositoryImpl(VideosApi(apiBaseUrl)),
+          ),
+        );
+      },
     );
   }
 }

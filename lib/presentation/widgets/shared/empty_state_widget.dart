@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Widget que muestra un estado vacío cuadno no hay datos que mostrar.
+/// Widget que muestra un estado vacío cuando no hay datos que mostrar.
 /// 
 class EmptyStateWidget extends StatelessWidget {
   final String message;

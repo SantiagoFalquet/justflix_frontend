@@ -9,42 +9,36 @@ class VideosApi {
   final String baseURL;
 
   // Constructor para crear una instancia de [VideosApi]
-  VideosApi(
-    this.baseURL
-    );
+  VideosApi(this.baseURL);
 
   // Obté una llista de JSON amb el resultat de l'API
   Future<List<dynamic>> getVideos(String searchQuery) async {
-    final Uri url;
-
-    if (searchQuery.isEmpty) {
-      url = Uri.parse('$baseURL/videos');
-    } else {
-      url = Uri.parse('$baseURL/topic/$searchQuery');
-    }
-
-    final response = await http.get(url);
-
-    if (response.statusCode == HttpStatus.ok) {
-      final body = utf8.decode(response.bodyBytes);
+    String url = "$baseURL/videos";
+    
+    http.Response data = await http.get(Uri.parse(url));
+    if (data.statusCode == HttpStatus.ok) {
+      String body = utf8.decode(data.bodyBytes);
       final bodyJSON = jsonDecode(body) as List;
+      
       return bodyJSON;
     } else {
-      throw Exception('Error al obtener vídeos: ${response.statusCode}');
+      throw [];
     }
   }
 
   /// Obtener información de un video específico en formato JSON.
   Future<Map<String, dynamic>> getVideoById(String videoId) async {
-    final url = Uri.parse('$baseURL/videos/$videoId');
-    final response = await http.get(url);
-    
-    if (response.statusCode == HttpStatus.ok) {
-      final body = utf8.decode(response.bodyBytes);
-      final Map<String, dynamic> jsonMap = jsonDecode(body);
-      return jsonMap;
+    String url = "$baseURL/videos/$videoId";
+
+    http.Response data = await http.get(Uri.parse(url));
+
+    if (data.statusCode == HttpStatus.ok) {
+      String body = utf8.decode(data.bodyBytes);
+      final bodyJSON = jsonDecode(body);
+      
+      return bodyJSON;
     } else {
-      throw Exception('Error al obtener vídeos $videoId: ${response.statusCode}');
+      throw {};
     }
   }
 }

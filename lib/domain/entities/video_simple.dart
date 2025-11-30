@@ -3,9 +3,5 @@ class VideoSimple {
   final String? thumbnail;
   final double? duration;
 
-  const VideoSimple({
-    required this.id,
-    this.thumbnail,
-    this.duration,
-    });
+  const VideoSimple({required this.id, this.thumbnail, this.duration});
 }
