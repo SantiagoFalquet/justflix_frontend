@@ -1,8 +1,7 @@
 import 'package:justflix_frontend/domain/entities/video.dart';
+import 'package:justflix_frontend/utils/url_formatter.dart';
 
 class VideoMapper {
-  static const String _backendBaseUrl = 'http://localhost:3002';
-  
   // Mètode estàtic que rep un JSON i retorna una istància de Video
   static Video fromJson(Map<String, dynamic> json) {
     /// Asegurar que los campos requierido no sean nulos y tenga un tipo correcto.
@@ -21,19 +20,8 @@ class VideoMapper {
       );
     }
 
-    /// Gestiona url completa o ruta relativa enviada desde el backend.
-    var thumbnailPath = json["thumbnail"] as String?;
-    /// Caso de ruta relavita, construimos la URL completa.
-    if (thumbnailPath != null && !thumbnailPath.startsWith('http')) {
-      thumbnailPath = '$_backendBaseUrl/$thumbnailPath';
-    }
-    final thumbnail = thumbnailPath?.replaceAll('localhost', '10.0.2.2');
-    
-    var videoURLPath = json["videoUrl"] as String?;
-    if (videoURLPath != null && !videoURLPath.startsWith('http')) {
-      videoURLPath = '$_backendBaseUrl/$videoURLPath';
-    }
-    final videoUrl = videoURLPath?.replaceAll('localhost', '10.0.2.2');
+    final thumbnail = UrlFormatter.formatPath(json["thumbnail"] as String?);
+    final videoUrl = UrlFormatter.formatPath(json["videoUrl"] as String?);
 
     return Video(
       id: id,

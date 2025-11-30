@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:justflix_frontend/domain/entities/video_simple.dart';
+import 'package:justflix_frontend/utils/formatters.dart';
+import 'package:justflix_frontend/presentation/widgets/shared/video_thumbnail.dart';
+
+/// Un widget que muestra un único elemento de video en una lista.
+///
+/// Muestra la miniatura del video si está disponible, de lo contrario
+/// muestra un icono de película por defecto. También maneja los errores
+/// de carga de la imagen.
+///
+class VideoListItem extends StatelessWidget {
+  /// La información del video a mostrar.
+  final VideoSimple video;
+  /// Callback que se ejecuta cuando se pulsa el elemento de la lista.
+  final VoidCallback? onTap;
+
+  const VideoListItem({super.key, required this.video, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      child: InkWell(
+        // InkWell para que el Card sea pulsable.
+        onTap: onTap, // _todo el card es pulsable
+        child: ListTile(
+          leading: VideoThumbnail(thumbnailUrl: video.thumbnail),
+          title: Text(video.id),
+          subtitle: Text('Duración: ${formatoDuration(video.duration)}'),
+        ),
+      ),
+    );
+  }
+}
