@@ -1,72 +1,118 @@
 import 'package:flutter/material.dart';
-import 'package:justflix_frontend/infrastructure/repository/videos_repository_impl.dart';
+import 'package:justflix_frontend/domain/entities/video.dart';
+import 'package:justflix_frontend/domain/entities/video_simple.dart';
+import 'package:justflix_frontend/repo_singleton.dart';
 import 'package:justflix_frontend/assets.dart';
-import 'package:justflix_frontend/presentation/providers/videos_providers.dart';
 import 'package:justflix_frontend/presentation/widgets/shared/empty_state_widget.dart';
 import 'package:justflix_frontend/presentation/widgets/shared/error_state_widget.dart';
 import 'package:justflix_frontend/presentation/widgets/shared/loading_indicator_widget.dart';
 import 'package:justflix_frontend/presentation/screens/home/sections/responsive_video_layout.dart';
 
 /// Pantalla principal que muestra una lista de videos y su detalle de forma responsiva.
-///
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required VideosRepositoryImpl repository});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _videosRepository = RepoSingleton().repository;
+
+  bool _isLoading = true;
+  String? _error;
+  List<VideoSimple> _videos = [];
+
+  Video? _selectedVideo;
+  bool _isLoadingDetail = false;
+  String? _detailError;
+
   @override
   void initState() {
     super.initState();
-    // Carga los videos cuando la pantalla se inicializa.
-    Provider.of<VideosProvider>(context, listen: false).loadVideos();
+    _loadVideos();
   }
 
-  /// Maneja la selección de un video de la lista.
-  /// Carga el detalle completo del video usando el provider.
-  void _handleVideoSelected(String videoId) {
-    Provider.of<VideosProvider>(context, listen: false).loadVideoById(videoId);
+  /// Carga la lista inicial de videos desde el repositorio.
+  Future<void> _loadVideos() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      final fetchedVideos = await _videosRepository.getVideos('');
+      setState(() {
+        _videos = fetchedVideos;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = 'Error al cargar los videos: $e';
+        _isLoading = false;
+      });
+    }
+  }
+
+  /// Carga el detalle de un video por su ID.
+  Future<void> _handleVideoSelected(String videoId) async {
+    setState(() {
+      _isLoadingDetail = true;
+      _detailError = null;
+      _selectedVideo = null; // Limpia el video anterior
+    });
+
+    try {
+      final fetchedVideo = await _videosRepository.getVideoById(videoId);
+      setState(() {
+        _selectedVideo = fetchedVideo;
+        _isLoadingDetail = false;
+      });
+    }
+    catch (e) {
+      setState(() {
+        _detailError = 'Error al cargar el detalle del video: $e';
+        _isLoadingDetail = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Observa los cambios en VideosProvider para reconstruir la UI.
-    final videosProvider = context.watch<VideosProvider>();
-
     return Scaffold(
       appBar: AppBar(
-        /// Mostra el logo de la aplicación en el AppBar.
         title: Image.asset(AppAssets.images.logo, height: 40),
       ),
-      body: _buildBody(videosProvider),
+      body: _buildBody(),
     );
   }
 
-  /// Construye el cuerpo de la pantalla basándose en el estado del provider.
-  Widget _buildBody(VideosProvider videosProvider) {
-    if (videosProvider.isLoading) {
+  /// Construye el cuerpo de la pantalla basándose en el estado local.
+  Widget _buildBody() {
+    if (_isLoading) {
       return const LoadingIndicatorWidget();
     }
 
-    if (videosProvider.error != null) {
+    if (_error != null) {
       return ErrorStateWidget(
-        message: videosProvider.error!,
-        onRetry: videosProvider.loadVideos,
+        message: _error!,
+        onRetry: _loadVideos,
       );
     }
 
-    if (videosProvider.videos.isEmpty) {
+    if (_videos.isEmpty) {
       return EmptyStateWidget(
         message: 'No se encontraron videos.',
-        onRetry: videosProvider.loadVideos,
+        onRetry: _loadVideos,
       );
     }
 
     return ResponsiveVideoLayout(
-      videos: videosProvider.videos,
+      videos: _videos,
       onVideoSelected: _handleVideoSelected,
+      selectedVideo: _selectedVideo,
+      isLoadingDetail: _isLoadingDetail,
+      detailError: _detailError,
     );
   }
 }

@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:justflix_frontend/domain/entities/video.dart';
 import 'package:justflix_frontend/domain/entities/video_simple.dart';
 import 'package:justflix_frontend/presentation/screens/home/sections/video_list_section.dart';
 import 'package:justflix_frontend/presentation/widgets/video/video_detail.dart';
 
 /// Sección responsable de decidir el layout responsivo del listado + detalle.
-///
 class ResponsiveVideoLayout extends StatelessWidget {
   final List<VideoSimple> videos;
   final void Function(String videoId) onVideoSelected;
+  final Video? selectedVideo;
+  final bool isLoadingDetail;
+  final String? detailError;
   final double breakpoint;
 
   const ResponsiveVideoLayout({
     super.key,
     required this.videos,
     required this.onVideoSelected,
+    this.selectedVideo,
+    this.isLoadingDetail = false,
+    this.detailError,
     // Definimos un breakpoint para cambiar entre layouts
     this.breakpoint = 600.0, // pixeles lógicos
   });
@@ -35,7 +41,13 @@ class ResponsiveVideoLayout extends StatelessWidget {
   Widget _buildStacked() {
     return Column(
       children: [
-        const Flexible(flex: 2, child: VideoDetail()),
+        Flexible(
+            flex: 2,
+            child: VideoDetail(
+              video: selectedVideo,
+              isLoading: isLoadingDetail,
+              error: detailError,
+            )),
         const Divider(height: 1),
         Flexible(
           flex: 3,
@@ -60,7 +72,13 @@ class ResponsiveVideoLayout extends StatelessWidget {
           ),
         ),
         const VerticalDivider(width: 1),
-        const Flexible(flex: 3, child: VideoDetail()),
+        Flexible(
+            flex: 3,
+            child: VideoDetail(
+              video: selectedVideo,
+              isLoading: isLoadingDetail,
+              error: detailError,
+            )),
       ],
     );
   }

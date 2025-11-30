@@ -7,7 +7,7 @@
 
 import 'package:justflix_frontend/domain/entities/video.dart';
 import 'package:justflix_frontend/domain/entities/video_simple.dart';
-import 'package:justflix_frontend/domain/repositories/videos_repositori.dart';
+import 'package:justflix_frontend/domain/repositories/videos_repository.dart';
 import 'package:justflix_frontend/infrastructure/data_sources/videos_api.dart';
 import 'package:justflix_frontend/infrastructure/mappers/video_mapper.dart';
 import 'package:justflix_frontend/infrastructure/mappers/video_simple_mapper.dart';

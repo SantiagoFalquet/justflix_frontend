@@ -13,7 +13,7 @@ class VideosApi {
 
   // Obté una llista de JSON amb el resultat de l'API
   Future<List<dynamic>> getVideos(String searchQuery) async {
-    String url = "$baseURL/videos";
+    String url = "$baseURL/api/videos";
     
     http.Response data = await http.get(Uri.parse(url));
     if (data.statusCode == HttpStatus.ok) {
@@ -28,7 +28,7 @@ class VideosApi {
 
   /// Obtener información de un video específico en formato JSON.
   Future<Map<String, dynamic>> getVideoById(String videoId) async {
-    String url = "$baseURL/videos/$videoId";
+    String url = "$baseURL/api/videos/$videoId";
 
     http.Response data = await http.get(Uri.parse(url));
 

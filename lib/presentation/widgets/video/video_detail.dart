@@ -1,38 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:justflix_frontend/presentation/widgets/video_player/video_player_orchestrator.dart';
-import 'package:provider/provider.dart';
 import 'package:justflix_frontend/domain/entities/video.dart';
-import 'package:justflix_frontend/presentation/providers/videos_providers.dart';
+import 'package:justflix_frontend/presentation/widgets/shared/loading_indicator_widget.dart';
+import 'package:justflix_frontend/presentation/widgets/video_player/video_player_orchestrator.dart';
 
 /// Un widget que muestra el detalle de un video seleccionado.
 ///
-/// Escucha a [VideosProvider] para reaccionar a los cambios de estado
-/// como la carga, errores, o la selección de un nuevo video.
-///
+/// Muestra un estado de carga, error o el contenido del video
+/// basándose en los parámetros recibidos.
 class VideoDetail extends StatelessWidget {
-  const VideoDetail({super.key});
+  final Video? video;
+  final bool isLoading;
+  final String? error;
+
+  const VideoDetail({
+    super.key,
+    this.video,
+    this.isLoading = false,
+    this.error,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<VideosProvider>(
-      builder: (_, provider, __) {
-        if (provider.isLoadingDetail) {
-          return const Center(child: CircularProgressIndicator());
-        }
+    if (isLoading) {
+      return const LoadingIndicatorWidget();
+    }
 
-        if (provider.detailError != null) {
-          return Center(child: Text(provider.detailError!));
-        }
+    if (error != null) {
+      return Center(child: Text(error!));
+    }
 
-        if (provider.selectedVideo == null) {
-          return const Center(
-            child: Text('Selecciona un vídeo para ver su detalle'),
-          );
-        }
+    if (video == null) {
+      return const Center(
+        child: Text('Selecciona un video para ver los detalles'),
+      );
+    }
 
-        return _VideoDetailContent(video: provider.selectedVideo!);
-      },
-    );
+    return _VideoDetailContent(video: video!);
   }
 }
 
@@ -51,13 +54,10 @@ class _VideoDetailContent extends StatelessWidget {
             VideoPlayerOrchestrator(videoUrl: video.videoUrl!)
           else if (video.thumbnail != null && video.thumbnail!.isNotEmpty)
             Image.network(video.thumbnail!),
-
           const SizedBox(height: 16),
           Text(video.id, style: Theme.of(context).textTheme.headlineSmall),
-          
           const SizedBox(height: 8),
-          if (video.description != null) 
-            Text(video.description!),
+          if (video.description != null) Text(video.description!),
         ],
       ),
     );
